@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="container mx-auto py-20">
+  <h2 class="text-3xl font-bold mb-10 text-center">Contact Me</h2>
+  <form id="contact-form" class="max-w-xl mx-auto bg-white p-8 rounded shadow space-y-4">
+    <input type="text" name="name" placeholder="Your Name" class="w-full p-3 border rounded">
+    <input type="email" name="email" placeholder="Your Email" class="w-full p-3 border rounded">
+    <input type="text" name="subject" placeholder="Subject" class="w-full p-3 border rounded">
+    <textarea name="message" placeholder="Message" class="w-full p-3 border rounded h-32"></textarea>
+    <button type="submit" class="px-6 py-3 bg-blue-500 text-white rounded hover:bg-blue-600 transition">Send Message</button>
+    <p id="form-feedback" class="text-green-500 mt-2 hidden"></p>
+  </form>
+</section>
+
+<script>
+const form = document.getElementById('contact-form');
+const feedback = document.getElementById('form-feedback');
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const data = {
+    name: form.name.value,
+    email: form.email.value,
+    subject: form.subject.value,
+    message: form.message.value
+  };
+  const res = await fetch('/contact', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  });
+  const result = await res.json();
+  if(result.success) {
+    feedback.textContent = result.message;
+    feedback.classList.remove('hidden');
+    form.reset();
+  } else {
+    feedback.textContent = result.error;
+    feedback.classList.remove('hidden');
+    feedback.classList.add('text-red-500');
+  }
+});
+</script>
