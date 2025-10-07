@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="container mx-auto py-20">
+  <h2 class="text-3xl font-bold mb-10 text-center">Admin Messages</h2>
+  <div class="space-y-4 max-w-3xl mx-auto">
+    {% for msg in messages %}
+      <div class="bg-white p-4 rounded shadow">
+        <p><strong>Name:</strong> {{ msg.name }}</p>
+        <p><strong>Email:</strong> {{ msg.email }}</p>
+        <p><strong>Subject:</strong> {{ msg.subject }}</p>
+        <p><strong>Message:</strong> {{ msg.message }}</p>
+      </div>
+    {% else %}
+      <p class="text-center text-gray-500">No messages yet.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
